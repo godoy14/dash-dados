@@ -19,31 +19,35 @@ import {
 
 const Dashboard: React.FC = () => {
 
-    const todayLastYear = new Date(new Date().setDate(new Date().getDate() - 365));
-    const today = new Date();
+    const [dataInicio, setDataInicio] = useState<Date>(new Date(new Date().setDate(new Date().getDate() - 365)));
+    const dataTermino = new Date();
 
-    const [dataInicio, setDataInicio] = useState<Date>(todayLastYear);
-    const [dataTermino, setDataTermino] = useState<Date>(today);
-    console.log(dataInicio);
+    const [cardStatus, setCardStatus] = useState<boolean>(false);
+    const handleSetCardStatus = () => {
+        setCardStatus(!cardStatus);
+    }
+
 
     const lineChartData = useMemo(() => {
         const chartData = [];
-        for (let d = dataInicio; d <= dataTermino; d.setMonth((d.getMonth() + 1) + 1) ) {
-            const filteredData = leads.filter(item => (new Date(item.dateIn).getMonth() + 1) == (d.getMonth() + 1));
+
+        const filteredData = leads.filter(item => new Date(item.dateIn) >= dataInicio && new Date(item.dateIn) <= dataTermino);
+        for (let d = new Date(dataInicio); d <= dataTermino; d.setMonth((d.getMonth()) + 1)) {
+            console.log(d);
+            console.log(dataInicio);
+            const filteredDataPerMonth = filteredData.filter(item => (new Date(item.dateIn).getMonth()) == (d.getMonth()));
             let data = {
                 name: String(d.getMonth() + 1) + '/' + String(d.getFullYear()),
-                total: filteredData.length,
-                totalSite: filteredData.filter(item => item.fonte === 'SITE').length,
-                totalTelefone: filteredData.filter(item => item.fonte === 'TELEFONE').length,
-                totalPortal: filteredData.filter(item => item.fonte === 'PORTAL').length,
-                totalPresencial: filteredData.filter(item => item.fonte === 'PRESENCIAL').length
+                total: filteredDataPerMonth.length,
+                totalSite: filteredDataPerMonth.filter(item => item.fonte === 'SITE').length,
+                totalTelefone: filteredDataPerMonth.filter(item => item.fonte === 'TELEFONE').length,
+                totalPortal: filteredDataPerMonth.filter(item => item.fonte === 'PORTAL').length,
+                totalPresencial: filteredDataPerMonth.filter(item => item.fonte === 'PRESENCIAL').length
             }
             chartData.push(data);
-            console.log(data);
-            console.log(dataInicio);
         }
         return chartData;
-    }, [dataInicio, dataTermino]);
+    }, [dataInicio]);
 
     return (
         <Container>
@@ -57,34 +61,37 @@ const Dashboard: React.FC = () => {
                             selected={dataInicio}
                             onChange={(date: Date) => setDataInicio(date)}
                             dateFormat="dd/MM/yyyy"
-
-                        />
-                    </DatePickerContainer>
-                </SelectDateContainer>
-
-                <SelectDateContainer>
-                    <TextSelectDate>
-                        Data de término:
-                    </TextSelectDate>
-                    <DatePickerContainer>
-                        <DatePicker
-                            selected={dataTermino}
-                            onChange={(date: Date) => setDataTermino(date)}
-                            dateFormat="dd/MM/yyyy"
+                            maxDate={dataTermino}
                         />
                     </DatePickerContainer>
                 </SelectDateContainer>
             </ContentHeaderDash>
 
             <ListItemContainer>
-                <ItemHeader title="Pré-Vendas" />
-                <LineChartBox data={lineChartData} title="Total de Leads por mês" />
+                <ItemHeader
+                    title="Pré-Vendas"
+                    handleSetCardStatus={handleSetCardStatus}
+                    status={cardStatus}
+                />
+                { cardStatus ?  <> </> : <LineChartBox data={lineChartData} title="Total de Leads por mês" />}
 
-                <ItemHeader title="Vendas" />
+                <ItemHeader
+                    title="Vendas"
+                    handleSetCardStatus={() => { }}
+                    status={true}
+                />
 
-                <ItemHeader title="Locação" />
+                <ItemHeader
+                    title="Locação"
+                    handleSetCardStatus={() => { }}
+                    status={true}
+                />
 
-                <ItemHeader title="Chamados" />
+                <ItemHeader
+                    title="Chamados"
+                    handleSetCardStatus={() => { }}
+                    status={true}
+                />
             </ListItemContainer>
 
         </Container>

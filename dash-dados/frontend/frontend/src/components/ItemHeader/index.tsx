@@ -10,17 +10,13 @@ import {
 
 interface IItemHeaderProps {
     title: string;
+    status: boolean;
+    handleSetCardStatus(): void;
 }
 
 const ItemHeader: React.FC<IItemHeaderProps> = ({
-    title
+    title, status, handleSetCardStatus
 }) => {
-
-    const [cardStatus, setCardStatus] = useState<boolean>(true);
-
-    const handleSetCardStatus = () => {
-        setCardStatus(!cardStatus);
-    }
 
     return (
         <Container>
@@ -29,7 +25,7 @@ const ItemHeader: React.FC<IItemHeaderProps> = ({
             </Title>
             <IconButton onClick={handleSetCardStatus}>
                 <IconContext.Provider value={{ color: 'black', size: '50px' }}>
-                    {cardStatus ? <BiChevronsRight /> : <BiChevronsDown />}
+                    {status ? <BiChevronsRight /> : <BiChevronsDown />}
                 </IconContext.Provider>
             </IconButton>
         </Container>
