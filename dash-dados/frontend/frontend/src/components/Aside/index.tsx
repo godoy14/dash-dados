@@ -37,7 +37,7 @@ const Aside: React.FC = () => {
                     <IconContext.Provider value={{ color: 'white', size: '25px' }}>
                         <VscDashboard />
                     </IconContext.Provider>
-                    <MenuItemText href="/">
+                    <MenuItemText href="/dash">
                         Dashboard
                     </MenuItemText>
                 </MenuItem>
@@ -46,7 +46,7 @@ const Aside: React.FC = () => {
                     <IconContext.Provider value={{ color: 'white', size: '25px' }}>
                         <BiSupport />
                     </IconContext.Provider>
-                    <MenuItemText href="/">
+                    <MenuItemText href="/suporte">
                         Suporte
                     </MenuItemText>
                 </MenuItem>

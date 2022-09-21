@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+    background-color: #DCDCDC;
+    height: 100%;
+`;
 
 export const ListItemContainer = styled.div`
     display: flex;

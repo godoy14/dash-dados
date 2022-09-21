@@ -20,22 +20,18 @@ import {
 const Dashboard: React.FC = () => {
 
     const [dataInicio, setDataInicio] = useState<Date>(new Date(new Date().setDate(new Date().getDate() - 365)));
-    const dataTermino = new Date();
+    const [dataTermino, setDataTermino] = useState<Date>(new Date());
 
-    const [cardStatus, setCardStatus] = useState<boolean>(false);
+    const [cardStatus, setCardStatus] = useState<boolean>(true);
     const handleSetCardStatus = () => {
         setCardStatus(!cardStatus);
     }
 
-
     const lineChartData = useMemo(() => {
         const chartData = [];
-
         const filteredData = leads.filter(item => new Date(item.dateIn) >= dataInicio && new Date(item.dateIn) <= dataTermino);
         for (let d = new Date(dataInicio); d <= dataTermino; d.setMonth((d.getMonth()) + 1)) {
-            console.log(d);
-            console.log(dataInicio);
-            const filteredDataPerMonth = filteredData.filter(item => (new Date(item.dateIn).getMonth()) == (d.getMonth()));
+            const filteredDataPerMonth = filteredData.filter(item => (new Date(item.dateIn).getMonth()) == (d.getMonth()) && (new Date(item.dateIn).getFullYear()) == (d.getFullYear()));
             let data = {
                 name: String(d.getMonth() + 1) + '/' + String(d.getFullYear()),
                 total: filteredDataPerMonth.length,
@@ -47,7 +43,7 @@ const Dashboard: React.FC = () => {
             chartData.push(data);
         }
         return chartData;
-    }, [dataInicio]);
+    }, [dataInicio, dataTermino]);
 
     return (
         <Container>
@@ -65,6 +61,19 @@ const Dashboard: React.FC = () => {
                         />
                     </DatePickerContainer>
                 </SelectDateContainer>
+
+                <SelectDateContainer>
+                    <TextSelectDate>
+                        Data de término:
+                    </TextSelectDate>
+                    <DatePickerContainer>
+                        <DatePicker
+                            selected={dataTermino}
+                            onChange={(date: Date) => setDataTermino(date)}
+                            dateFormat="dd/MM/yyyy"
+                        />
+                    </DatePickerContainer>
+                </SelectDateContainer>
             </ContentHeaderDash>
 
             <ListItemContainer>
@@ -73,7 +82,7 @@ const Dashboard: React.FC = () => {
                     handleSetCardStatus={handleSetCardStatus}
                     status={cardStatus}
                 />
-                { cardStatus ?  <> </> : <LineChartBox data={lineChartData} title="Total de Leads por mês" />}
+                { cardStatus ?  <> </> : <LineChartBox data={lineChartData} title="Relação entre Leads e Veículos de Captação!" />}
 
                 <ItemHeader
                     title="Vendas"

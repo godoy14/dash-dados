@@ -6,7 +6,7 @@ export const Container = styled.div`
 
     background-color: #FDFD96;
 
-    margin: 10px 60px 10px 60px;
+    margin: 10px 60px 0px 60px;
     
     display: flex;
     justify-content: space-between;

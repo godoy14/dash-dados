@@ -6,11 +6,13 @@ import {
     Container
 } from './styles';
 
-const Content: React.FC = () => {
+const Content: React.FC<{ children: React.ReactNode }> = ({
+    children
+}) => {
     
     return (
         <Container>
-            <Dashboard />
+            {children}
         </Container>
     )
 

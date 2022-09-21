@@ -4,7 +4,7 @@ export const Container = styled.div`
 
     height: 80px;
 
-    background-color: #d3d3d3;
+    background-color: #C0C0C0;
 
     width: 100%;
 

@@ -7,12 +7,18 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend
+    ResponsiveContainer
 } from 'recharts';
 
 
 import {
-    Container
+    Container,
+    Header,
+    LegendContainer,
+    ButtonContainer,
+    ChartContainer,
+    Legend,
+    Content
 } from "./styles";
 
 interface ILineChartBox {
@@ -33,50 +39,102 @@ const LineChartBox: React.FC<ILineChartBox> = ({
 }) => {
     return (
         <Container>
-            <h1>{title}</h1>
-                <LineChart
-                    width={1000}
-                    height={300}
-                    data={data}
-                    margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5,
-                    }}>
+            <Header>
+                <h1>{title}</h1>
+            </Header>
+            <Content>
+                <LegendContainer>
+                    <h2>Legendas</h2>
+                    <Legend color='#ff0000'>
+                        <div></div>
+                        <span>Total</span>
+                    </Legend>
+                    <Legend color='#0000ff'>
+                        <div></div>
+                        <span>Site</span>
+                    </Legend>
+                    <Legend color='#00ff00'>
+                        <div></div>
+                        <span>Telefone</span>
+                    </Legend>
+                    <Legend color='#FFA500'>
+                        <div></div>
+                        <span>Portal</span>
+                    </Legend>
+                    <Legend color='#000000'>
+                        <div></div>
+                        <span>Presecial</span>
+                    </Legend>
+                </LegendContainer>
 
-                    <CartesianGrid />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line
-                        type="monotone"
-                        dataKey="total"
-                        stroke="red"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="totalSite"
-                        stroke="blue"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="totalTelefone"
-                        stroke="green"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="totalPortal"
-                        stroke="orange"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="totalPresencial"
-                        stroke="black"
-                    />
+                <ChartContainer>
+                    <ResponsiveContainer>
+                        <LineChart
+                            data={data}
+                            margin={{
+                                top: 5,
+                                right: 30,
+                                left: 20,
+                                bottom: 5,
+                            }}>
 
-                </LineChart>
+                            <CartesianGrid />
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Line
+                                type="monotone"
+                                dataKey="total"
+                                name="Total"
+                                stroke="red"
+                                strokeWidth={5}
+                                dot={{ r: 5 }}
+                                activeDot={{ r: 8 }}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="totalSite"
+                                name="Site"
+                                stroke="blue"
+                                strokeWidth={5}
+                                dot={{ r: 5 }}
+                                activeDot={{ r: 8 }}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="totalTelefone"
+                                name="Telefone"
+                                stroke="green"
+                                strokeWidth={5}
+                                dot={{ r: 5 }}
+                                activeDot={{ r: 8 }}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="totalPortal"
+                                name="Portal"
+                                stroke="orange"
+                                strokeWidth={5}
+                                dot={{ r: 5 }}
+                                activeDot={{ r: 8 }}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="totalPresencial"
+                                name="Presencial"
+                                stroke="black"
+                                strokeWidth={5}
+                                dot={{ r: 5 }}
+                                activeDot={{ r: 8 }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </ChartContainer>
+            </Content>
+            <ButtonContainer>
+                <button>Ver mais!</button>
+            </ButtonContainer>
+
         </Container>
     )
 }
