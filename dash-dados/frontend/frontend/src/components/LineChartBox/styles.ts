@@ -13,7 +13,8 @@ export const Container = styled.div`
 
     margin: 0 120px 0 120px;
 
-    border-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 `;
 
 export const Header = styled.div`
@@ -38,9 +39,16 @@ export const LegendContainer = styled.div`
     list-style: none;
     padding-left: 15px;
 
+    background-color: #DCDCDC;
+
+    border-radius: 10px;
+
+    margin-left: 10px;
+
     width: 250px;
 
     > h2 {
+        margin-top: 10px;
         text-align: center;
     }
 `;
