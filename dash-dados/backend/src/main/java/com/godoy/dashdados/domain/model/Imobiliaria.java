@@ -11,6 +11,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -41,6 +43,7 @@ public class Imobiliaria {
 	@Column(name = "isAdmin", nullable = false)
 	private Boolean isAdmin = false;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "imobiliaria")
 	private List<Pipeline> pipe;
 

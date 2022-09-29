@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.godoy.dashdados.api.DTO.input.ImobiliariaInputModel;
-import com.godoy.dashdados.api.DTO.model.ImobiliariaModel;
-import com.godoy.dashdados.domain.service.ImobiliariaService;
+import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
+import com.godoy.dashdados.api.DTO.model.PipelineModel;
+import com.godoy.dashdados.domain.service.PipelineService;
 
 @RestController
-@RequestMapping("/imobiliarias")
-public class ImobiliariaController {
+@RequestMapping("/pipelines")
+public class PipelineController {
 	
 	@Autowired
-	private ImobiliariaService imobiliariaService;
+	private PipelineService pipelineService;
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<ImobiliariaModel> listAll() {
-		return imobiliariaService.listar();
+	public List<PipelineModel> listAll() {
+		return pipelineService.listar();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ImobiliariaModel adicionar(@RequestBody @Valid ImobiliariaInputModel imobiliariaInput) {
-		return imobiliariaService.salvar(imobiliariaInput);
+	public PipelineModel adicionar(@RequestBody @Valid PipelineInputModel pipelineInputModel) {
+		return pipelineService.salvar(pipelineInputModel);
 	}
 
 }

@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import com.godoy.dashdados.domain.model.Pipeline;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +25,6 @@ public class ImobiliariaInputModel {
 	
 	private Boolean isAdmin;
 	
-	private List<Pipeline> pipe;
+	private List<PipelineIdInputModel> pipe;
 
 }

@@ -1,11 +1,12 @@
 package com.godoy.dashdados.domain.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.godoy.dashdados.api.DTO.assembler.ImobiliariaInputDisassembler;
+import com.godoy.dashdados.api.DTO.assembler.ImobiliariaModelAssembler;
 import com.godoy.dashdados.api.DTO.input.ImobiliariaInputModel;
 import com.godoy.dashdados.api.DTO.model.ImobiliariaModel;
 import com.godoy.dashdados.domain.exception.ImobiliariaNaoEncontradaException;
@@ -19,9 +20,15 @@ public class ImobiliariaService {
 	@Autowired
 	private ImobiliariaRepository imobiliariaRepository;
 	
+	@Autowired
+	private ImobiliariaModelAssembler imobiliariaModelAssembler;
+	
+	@Autowired
+	private ImobiliariaInputDisassembler imobiliariaInputDisassembler;
+	
 	public List<ImobiliariaModel> listar() {
-		List<Imobiliaria> list = imobiliariaRepository.findAll();
-		return list.stream().map(x -> new ImobiliariaModel(x)).collect(Collectors.toList());
+		List<Imobiliaria> lista = imobiliariaRepository.findAll();
+		return imobiliariaModelAssembler.toCollectionModel(lista);
 	}
 	
 	public Imobiliaria buscarOuFalhar(Long imobiliariaId) {
@@ -35,17 +42,11 @@ public class ImobiliariaService {
 			throw new NegocioException("Já existe Imobiliária cadastrada com esse Email");
 		}
 		
-		Imobiliaria imobiliariaObj = new Imobiliaria();
-		imobiliariaObj.setName(imobiliariaInput.getName());
-		imobiliariaObj.setEmail(imobiliariaInput.getEmail());
-		imobiliariaObj.setIsAdmin(imobiliariaInput.getIsAdmin());
-		imobiliariaObj.setPassword(imobiliariaInput.getPassword());
-		imobiliariaObj.setPipe(imobiliariaInput.getPipe());
-		imobiliariaObj.setUrlSistema(imobiliariaInput.getUrlSistema());
+		Imobiliaria imobiliariaObj = imobiliariaInputDisassembler.toDomainObject(imobiliariaInput);
 		
 		imobiliariaObj = imobiliariaRepository.save(imobiliariaObj);
 		
-		return new ImobiliariaModel(imobiliariaObj);
+		return imobiliariaModelAssembler.toModel(imobiliariaObj);
 	}
 
 }

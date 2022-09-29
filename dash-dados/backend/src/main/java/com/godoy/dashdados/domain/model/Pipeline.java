@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,6 +32,7 @@ public class Pipeline {
 	@NotNull
 	private Long idSistema;
 	
+	@JsonIgnore
 	@ManyToOne
 	private Imobiliaria imobiliaria;
 	
