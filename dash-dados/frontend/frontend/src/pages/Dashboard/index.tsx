@@ -14,7 +14,8 @@ import {
     ListItemContainer,
     SelectDateContainer,
     TextSelectDate,
-    DatePickerContainer
+    DatePickerContainer,
+    ButtonContainer
 } from './styles';
 
 const Dashboard: React.FC = () => {
@@ -83,6 +84,7 @@ const Dashboard: React.FC = () => {
                     status={cardStatus}
                 />
                 { cardStatus ?  <> </> : <LineChartBox data={lineChartData} title="Relação entre Leads e Veículos de Captação!" />}
+                
 
                 <ItemHeader
                     title="Vendas"

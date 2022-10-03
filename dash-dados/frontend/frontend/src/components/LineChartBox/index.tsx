@@ -130,8 +130,9 @@ const LineChartBox: React.FC<ILineChartBox> = ({
                         </LineChart>
                     </ResponsiveContainer>
                 </ChartContainer>
+
             </Content>
-            <ButtonContainer>
+            <ButtonContainer href="/dash/leads">
                 <button>Ver mais!</button>
             </ButtonContainer>
 

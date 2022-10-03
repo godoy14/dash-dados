@@ -84,8 +84,7 @@ export const ChartContainer = styled.div`
     flex: 1;
     padding-right: 15px;
 `;
-
-export const ButtonContainer = styled.div`
+export const ButtonContainer = styled.a`
     width: 100%;
     height: 60px;
     display: flex;
