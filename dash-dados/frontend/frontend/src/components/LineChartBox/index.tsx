@@ -23,6 +23,7 @@ import {
 
 interface ILineChartBox {
     title: string,
+    seeButton: boolean,
     data: {
         name: string;
         total: number;
@@ -35,7 +36,8 @@ interface ILineChartBox {
 
 const LineChartBox: React.FC<ILineChartBox> = ({
     title,
-    data
+    data,
+    seeButton
 }) => {
     return (
         <Container>
@@ -132,9 +134,10 @@ const LineChartBox: React.FC<ILineChartBox> = ({
                 </ChartContainer>
 
             </Content>
-            <ButtonContainer href="/dash/leads">
-                <button>Ver mais!</button>
-            </ButtonContainer>
+            {seeButton ?
+                <ButtonContainer href="/dash/leads">
+                    <button>Ver mais!</button>
+                </ButtonContainer> : <></>}
 
         </Container>
     )

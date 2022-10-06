@@ -14,8 +14,7 @@ import {
     ListItemContainer,
     SelectDateContainer,
     TextSelectDate,
-    DatePickerContainer,
-    ButtonContainer
+    DatePickerContainer
 } from './styles';
 
 const Dashboard: React.FC = () => {
@@ -83,8 +82,11 @@ const Dashboard: React.FC = () => {
                     handleSetCardStatus={handleSetCardStatus}
                     status={cardStatus}
                 />
-                { cardStatus ?  <> </> : <LineChartBox data={lineChartData} title="Relação entre Leads e Veículos de Captação!" />}
-                
+                {cardStatus ? <> </> : <LineChartBox
+                                            data={lineChartData}
+                                            title="Relação entre Leads e Veículos de Captação!"
+                                            seeButton={true} />}
+
 
                 <ItemHeader
                     title="Vendas"

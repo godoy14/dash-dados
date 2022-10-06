@@ -15,11 +15,9 @@ interface IPieChartProps {
     }[]
 }
 
-const PieChartBox: React.FC<IPieChartProps> = ({ data, title }) => {
+const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
     return(
         <Container>
-            <h1>{title}</h1>
-
             <ResponsiveContainer>
                 <PieChart>
                     <Pie data={data} labelLine={false} dataKey="percent">

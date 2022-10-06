@@ -74,6 +74,4 @@ export const MenuItemText = styled.a`
     font-weight: 500;
 
     color: #FFFFFF;
-    
-
 `;
