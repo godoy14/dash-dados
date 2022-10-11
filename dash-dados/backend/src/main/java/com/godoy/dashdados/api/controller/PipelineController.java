@@ -35,5 +35,6 @@ public class PipelineController {
 	public PipelineModel adicionar(@RequestBody @Valid PipelineInputModel pipelineInputModel) {
 		return pipelineService.salvar(pipelineInputModel);
 	}
+	
 
 }

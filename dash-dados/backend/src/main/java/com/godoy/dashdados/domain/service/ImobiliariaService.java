@@ -31,6 +31,11 @@ public class ImobiliariaService {
 		return imobiliariaModelAssembler.toCollectionModel(lista);
 	}
 	
+	public ImobiliariaModel detalhes(Long imobiliariaId) {
+		Imobiliaria imobiliariaDetail = imobiliariaRepository.findById(imobiliariaId).orElseThrow(() -> new ImobiliariaNaoEncontradaException(imobiliariaId));
+		return imobiliariaModelAssembler.toModel(imobiliariaDetail);
+	}
+	
 	public Imobiliaria buscarOuFalhar(Long imobiliariaId) {
 		return imobiliariaRepository.findById(imobiliariaId).orElseThrow(() -> new ImobiliariaNaoEncontradaException(imobiliariaId));
 	}
