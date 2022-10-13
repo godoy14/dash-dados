@@ -10,11 +10,12 @@ import com.godoy.dashdados.api.DTO.assembler.PipelineInputDisassembler;
 import com.godoy.dashdados.api.DTO.assembler.PipelineModelAssembler;
 import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
 import com.godoy.dashdados.api.DTO.model.PipelineModel;
+import com.godoy.dashdados.domain.exception.BadRequestException;
+import com.godoy.dashdados.domain.exception.ConflictException;
 import com.godoy.dashdados.domain.exception.NegocioException;
 import com.godoy.dashdados.domain.model.Imobiliaria;
 import com.godoy.dashdados.domain.model.Pipeline;
 import com.godoy.dashdados.domain.model.TiposPipelines;
-import com.godoy.dashdados.domain.repository.ImobiliariaRepository;
 import com.godoy.dashdados.domain.repository.PipelineRepository;
 
 @Service
@@ -33,44 +34,40 @@ public class PipelineService {
 	@org.springframework.context.annotation.Lazy
 	private ImobiliariaService imobiliariaService;
 	
-	@Autowired
-	private ImobiliariaRepository imobiliariaRepository;
-	
 	public List<PipelineModel> listar() {
 		List<Pipeline> lista = pipelineRepository.findAll();
 		return pipelineModelAssembler.toCollectionModel(lista);
 	}
 	
-//	public PipelineModel salvar(PipelineInputModel pipelineInputModel) {
-//		Pipeline pipelineObj = pipelineInputDisassembler.toDomainObject(pipelineInputModel);
-//		pipelineObj.setImobiliaria(imobiliariaService.buscarOuFalhar(pipelineInputModel.getImobiliaria()));
-//		pipelineObj = pipelineRepository.save(pipelineObj);
-//		
-//		return pipelineModelAssembler.toModel(pipelineObj);
-//	}
+	public Pipeline buscarOuFalhar(Long pipelineId) {
+		return pipelineRepository.findById(pipelineId).orElseThrow(() -> new NegocioException("Pipeline nao encontrado"));
+	}
 	
 	public PipelineModel salvar(PipelineInputModel pipelineInputModel) {
 		
 		Imobiliaria imobiliaria = imobiliariaService.buscarOuFalhar(pipelineInputModel.getImobiliaria());
-
-		if (TiposPipelines.valueOf(TiposPipelines.class, pipelineInputModel.getTipo()).equals(null)) {
-			throw new NegocioException("Não existe esse tipo de Pipeline!");
+		
+		try {
+			TiposPipelines.valueOf(TiposPipelines.class, pipelineInputModel.getTipo());
+		} catch (IllegalArgumentException e) {
+			throw new BadRequestException(
+					String.format("%s não é um tipo de Pipeline compatível, seguem as possiblidades: LEADS," + 
+							" CHAMADOS," + 
+							" MANUTENCAO," + 
+							" LOCACAO," + 
+							" VENDA", pipelineInputModel.getTipo().toString()));
 		}
 		
-		List<String> listPipes = new ArrayList<>();
+		List<String> listPipes = new ArrayList<String>();
 		imobiliaria.getPipe().forEach(item -> listPipes.add(item.getTipo().toString()));
 		
 		if (listPipes.contains(pipelineInputModel.getTipo())) {
-			throw new NegocioException("Esse tipo de pipeline já foi adicionado a esta imobiliária");
+			throw new ConflictException("Esse tipo de pipeline já foi adicionado a esta imobiliária");
 		}
 		
 		Pipeline pipelineObj = pipelineInputDisassembler.toDomainObject(pipelineInputModel);
 		pipelineObj.setImobiliaria(imobiliaria);
 		pipelineObj = pipelineRepository.save(pipelineObj);
-				
-		imobiliaria.getPipe().add(pipelineObj);
-		
-		imobiliariaRepository.save(imobiliaria);
 		
 		return pipelineModelAssembler.toModel(pipelineObj);
 		

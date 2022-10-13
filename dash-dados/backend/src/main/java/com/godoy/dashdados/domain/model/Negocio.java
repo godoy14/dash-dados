@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Data
@@ -22,10 +24,12 @@ public class Negocio {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonIgnore
 	@NotNull
 	@ManyToOne
 	private Imobiliaria imobiliaria;
 	
+	@JsonIgnore
 	@NotNull
 	@OneToOne
 	private Pipeline pipeline;
