@@ -3,7 +3,10 @@ package com.godoy.dashdados.domain.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.godoy.dashdados.api.DTO.assembler.ImobiliariaInputDisassembler;
 import com.godoy.dashdados.api.DTO.assembler.ImobiliariaModelAssembler;
@@ -26,20 +29,21 @@ public class ImobiliariaService {
 	@Autowired
 	private ImobiliariaInputDisassembler imobiliariaInputDisassembler;
 	
+	public Imobiliaria buscarOuFalhar(Long imobiliariaId) {
+		return imobiliariaRepository.findById(imobiliariaId).orElseThrow(() -> new ImobiliariaNaoEncontradaException(imobiliariaId));
+	}
+	
 	public List<ImobiliariaModel> listar() {
 		List<Imobiliaria> lista = imobiliariaRepository.findAll();
 		return imobiliariaModelAssembler.toCollectionModel(lista);
 	}
 	
 	public ImobiliariaModel detalhes(Long imobiliariaId) {
-		Imobiliaria imobiliariaDetail = imobiliariaRepository.findById(imobiliariaId).orElseThrow(() -> new ImobiliariaNaoEncontradaException(imobiliariaId));
+		Imobiliaria imobiliariaDetail = buscarOuFalhar(imobiliariaId);
 		return imobiliariaModelAssembler.toModel(imobiliariaDetail);
 	}
 	
-	public Imobiliaria buscarOuFalhar(Long imobiliariaId) {
-		return imobiliariaRepository.findById(imobiliariaId).orElseThrow(() -> new ImobiliariaNaoEncontradaException(imobiliariaId));
-	}
-	
+	@Transactional
 	public ImobiliariaModel salvar(ImobiliariaInputModel imobiliariaInput) {
 		Imobiliaria existImobiliaria = imobiliariaRepository.findByEmail(imobiliariaInput.getEmail());
 		
@@ -52,6 +56,17 @@ public class ImobiliariaService {
 		imobiliariaObj = imobiliariaRepository.save(imobiliariaObj);
 		
 		return imobiliariaModelAssembler.toModel(imobiliariaObj);
+	}
+	
+	public void excluir(Long imobiliariaId) {
+		try {
+			imobiliariaRepository.deleteById(imobiliariaId);
+			imobiliariaRepository.flush();
+		} catch (EmptyResultDataAccessException e) {
+			throw new ImobiliariaNaoEncontradaException(imobiliariaId);
+		} catch (DataIntegrityViolationException e) {
+			throw new NegocioException("Imobiliaria em uso, não é possível realizar sua exclusão.");
+		}
 	}
 
 }

@@ -8,4 +8,6 @@ import com.godoy.dashdados.domain.model.ResponsavelNegocio;
 @Repository
 public interface ResponsavelNegocioRepository extends JpaRepository<ResponsavelNegocio, Long>{
 
+	ResponsavelNegocio findByEmail(String email);
+	
 }

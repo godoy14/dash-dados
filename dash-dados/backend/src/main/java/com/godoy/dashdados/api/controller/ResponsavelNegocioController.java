@@ -15,40 +15,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
-import com.godoy.dashdados.api.DTO.model.PipelineModel;
-import com.godoy.dashdados.domain.service.PipelineService;
+import com.godoy.dashdados.api.DTO.input.ResponsavelInputModel;
+import com.godoy.dashdados.api.DTO.model.ResponsavelModel;
+import com.godoy.dashdados.domain.service.ResponsavelNegocioService;
 
 @RestController
-@RequestMapping("/pipelines")
-public class PipelineController {
+@RequestMapping("/responsaveis")
+public class ResponsavelNegocioController {
 	
 	@Autowired
-	private PipelineService pipelineService;
+	private ResponsavelNegocioService responsavelNegocioService;
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<PipelineModel> listAll() {
-		return pipelineService.listar();
+	public List<ResponsavelModel> listar(){
+		return responsavelNegocioService.listar();
 	}
 	
-	@GetMapping("/{pipelineId}")
+	@GetMapping("/{responsavelId}")
 	@ResponseStatus(HttpStatus.OK)
-	public PipelineModel detalhes(@PathVariable Long pipelineId) {
-		return pipelineService.detalhes(pipelineId);
+	public ResponsavelModel detalhes(@PathVariable Long responsavelId) {
+		return responsavelNegocioService.detalhes(responsavelId);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public PipelineModel adicionar(@RequestBody @Valid PipelineInputModel pipelineInputModel) {
-		return pipelineService.salvar(pipelineInputModel);
+	public ResponsavelModel adicionar(@RequestBody @Valid ResponsavelInputModel responsavelInputModel) {
+		return responsavelNegocioService.salvar(responsavelInputModel);
 	}
 	
-	@DeleteMapping("/{pipelineId}")
+	@DeleteMapping("/{responsavelId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void deletar(@PathVariable Long pipelineId) {
-		pipelineService.excluir(pipelineId);
+	public void deletar(@PathVariable Long responsavelId) {
+		responsavelNegocioService.excluir(responsavelId);
 	}
-	
 
 }
