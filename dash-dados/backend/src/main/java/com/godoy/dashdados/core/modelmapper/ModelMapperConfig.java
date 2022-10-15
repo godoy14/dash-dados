@@ -4,7 +4,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.godoy.dashdados.api.DTO.input.LeadNegocioInputModel;
 import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
+import com.godoy.dashdados.domain.model.Negocio;
 import com.godoy.dashdados.domain.model.Pipeline;
 
 @Configuration
@@ -15,6 +17,8 @@ public class ModelMapperConfig {
 		var modelMapper = new ModelMapper();
 		
 		modelMapper.createTypeMap(PipelineInputModel.class, Pipeline.class).addMappings(mapper -> mapper.skip(Pipeline::setId));
+
+		modelMapper.createTypeMap(LeadNegocioInputModel.class, Negocio.class).addMappings(mapper -> mapper.skip(Negocio::setId));
 		
 		return modelMapper;
 	}

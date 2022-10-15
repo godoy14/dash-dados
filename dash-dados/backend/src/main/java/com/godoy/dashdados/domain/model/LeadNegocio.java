@@ -1,6 +1,6 @@
 package com.godoy.dashdados.domain.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -20,9 +20,9 @@ public class LeadNegocio extends Negocio {
 	
 	private String codImovel;
 	
-	private Date dateIn;
+	private LocalDateTime dateIn;
 	
-	private Date dateOut;
+	private LocalDateTime dateOut;
 	
 	@Enumerated(EnumType.STRING)
 	private TiposNegocios tipo;

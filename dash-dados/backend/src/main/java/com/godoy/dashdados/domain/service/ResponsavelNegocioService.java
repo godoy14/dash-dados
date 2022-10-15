@@ -58,7 +58,7 @@ public class ResponsavelNegocioService {
 		ResponsavelNegocio existentResponsavel = responsavelNegocioRepository.findByEmail(responsavelInput.getEmail());
 		
 		if (existentResponsavel != null) {
-			throw new ConflictException("There is already a patient registered with this email!");
+			throw new ConflictException("Já existe um responsável cadastrado com esse email!");
 		}
 		
 		ResponsavelNegocio responsavel = responsavelInputDisassembler.toDomainObject(responsavelInput);

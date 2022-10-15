@@ -1,5 +1,7 @@
 package com.godoy.dashdados.api.DTO.input;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -11,10 +13,10 @@ import lombok.Setter;
 public class LeadNegocioInputModel {
 	
 	@NotNull
-	private Long imobiliariaId;
+	private Long imobiliariaCod;
 	
 	@NotNull
-	private Long pipelineId;
+	private Long pipelineCod;
 	
 	@NotBlank
 	private String status;
@@ -23,7 +25,7 @@ public class LeadNegocioInputModel {
 	private String fonte;
 
 	@NotNull
-	private Long responsavelId;
+	private Long responsavelCod;
 	
 	@NotNull
 	private Long idBitrix;
@@ -31,10 +33,10 @@ public class LeadNegocioInputModel {
 	@NotBlank
 	private String codImovel;
 	
-	@NotBlank
-	private String dateIn;
+	@NotNull
+	private LocalDateTime dateIn;
 	
-	private String dateOut;
+	private LocalDateTime dateOut;
 	
 	@NotBlank
 	private String tipo;

@@ -12,4 +12,6 @@ public interface LeadNegocioRespository extends JpaRepository<LeadNegocio, Long>
 	
 	List<LeadNegocio> findByPipelineId (Long pipelineId);
 	
+	LeadNegocio findByIdBitrix(Long idBitrix);
+	
 }

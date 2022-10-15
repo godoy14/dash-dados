@@ -58,6 +58,7 @@ public class ImobiliariaService {
 		return imobiliariaModelAssembler.toModel(imobiliariaObj);
 	}
 	
+	@Transactional
 	public void excluir(Long imobiliariaId) {
 		try {
 			imobiliariaRepository.deleteById(imobiliariaId);
