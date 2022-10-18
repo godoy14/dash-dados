@@ -1,5 +1,6 @@
 package com.godoy.dashdados.api.controller;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.godoy.dashdados.api.DTO.input.LeadNegocioInputModel;
 import com.godoy.dashdados.api.DTO.model.LeadNegocioModel;
+import com.godoy.dashdados.domain.model.FonteNegocio;
+import com.godoy.dashdados.domain.model.StatusNegocio;
+import com.godoy.dashdados.domain.model.TiposNegocios;
 import com.godoy.dashdados.domain.service.LeadNegocioService;
 
 @RestController
@@ -41,6 +45,27 @@ public class LeadNegocioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public LeadNegocioModel adicionar(@RequestBody @Valid LeadNegocioInputModel leadNegocioInputModel) {
 		return leadNegocioService.salvar(leadNegocioInputModel);
+	}
+	
+	@GetMapping("/listaFonte")
+	@ResponseStatus(HttpStatus.OK)
+	public EnumSet<FonteNegocio> listarFontes() {
+		EnumSet<FonteNegocio> all = EnumSet.allOf(FonteNegocio.class);
+		return all;
+	}
+	
+	@GetMapping("/listaStatus")
+	@ResponseStatus(HttpStatus.OK)
+	public EnumSet<StatusNegocio> listarStatus() {
+		EnumSet<StatusNegocio> all = EnumSet.allOf(StatusNegocio.class);
+		return all;
+	}
+	
+	@GetMapping("/listaTiposLead")
+	@ResponseStatus(HttpStatus.OK)
+	public EnumSet<TiposNegocios> listarTiposLead() {
+		EnumSet<TiposNegocios> all = EnumSet.allOf(TiposNegocios.class);
+		return all;
 	}
 
 }

@@ -13,8 +13,8 @@ import com.godoy.dashdados.api.DTO.assembler.NegocioModelAssembler;
 import com.godoy.dashdados.api.DTO.input.NegocioInputModel;
 import com.godoy.dashdados.api.DTO.model.NegocioModel;
 import com.godoy.dashdados.domain.exception.BadRequestException;
-import com.godoy.dashdados.domain.exception.ImobiliariaNaoEncontradaException;
 import com.godoy.dashdados.domain.exception.NegocioException;
+import com.godoy.dashdados.domain.exception.NegocioNaoEncontradaException;
 import com.godoy.dashdados.domain.model.FonteNegocio;
 import com.godoy.dashdados.domain.model.Imobiliaria;
 import com.godoy.dashdados.domain.model.Negocio;
@@ -99,7 +99,7 @@ public class NegocioService {
 			negocioRepository.deleteById(negocioId);
 			negocioRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new ImobiliariaNaoEncontradaException(negocioId);
+			throw new NegocioNaoEncontradaException(negocioId);
 		} catch (DataIntegrityViolationException e) {
 			throw new NegocioException("Negócio em uso, não é possível realizar sua exclusão.");
 		}

@@ -15,8 +15,8 @@ import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
 import com.godoy.dashdados.api.DTO.model.PipelineModel;
 import com.godoy.dashdados.domain.exception.BadRequestException;
 import com.godoy.dashdados.domain.exception.ConflictException;
-import com.godoy.dashdados.domain.exception.ImobiliariaNaoEncontradaException;
 import com.godoy.dashdados.domain.exception.NegocioException;
+import com.godoy.dashdados.domain.exception.PipelineNaoEncontradaException;
 import com.godoy.dashdados.domain.model.Imobiliaria;
 import com.godoy.dashdados.domain.model.Pipeline;
 import com.godoy.dashdados.domain.model.TiposPipelines;
@@ -89,7 +89,7 @@ public class PipelineService {
 			pipelineRepository.deleteById(pipelineId);
 			pipelineRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new ImobiliariaNaoEncontradaException(pipelineId);
+			throw new PipelineNaoEncontradaException(pipelineId);
 		} catch (DataIntegrityViolationException e) {
 			throw new NegocioException("Pipeline em uso, não é possível realizar sua exclusão.");
 		}

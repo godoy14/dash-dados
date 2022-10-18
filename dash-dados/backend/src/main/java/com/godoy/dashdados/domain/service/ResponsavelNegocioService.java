@@ -13,8 +13,8 @@ import com.godoy.dashdados.api.DTO.assembler.ResponsavelModelAssembler;
 import com.godoy.dashdados.api.DTO.input.ResponsavelInputModel;
 import com.godoy.dashdados.api.DTO.model.ResponsavelModel;
 import com.godoy.dashdados.domain.exception.ConflictException;
-import com.godoy.dashdados.domain.exception.ImobiliariaNaoEncontradaException;
 import com.godoy.dashdados.domain.exception.NegocioException;
+import com.godoy.dashdados.domain.exception.ResponsavelNegocioNaoEncontradaException;
 import com.godoy.dashdados.domain.model.ResponsavelNegocio;
 import com.godoy.dashdados.domain.repository.ResponsavelNegocioRepository;
 
@@ -73,7 +73,7 @@ public class ResponsavelNegocioService {
 			responsavelNegocioRepository.deleteById(responsavelId);
 			responsavelNegocioRepository.flush();
 		} catch (EmptyResultDataAccessException e) {
-			throw new ImobiliariaNaoEncontradaException(responsavelId);
+			throw new ResponsavelNegocioNaoEncontradaException(responsavelId);
 		} catch (DataIntegrityViolationException e) {
 			throw new NegocioException("Responsavel em uso, não é possível realizar sua exclusão.");
 		}
