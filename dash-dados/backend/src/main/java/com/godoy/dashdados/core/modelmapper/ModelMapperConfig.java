@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.godoy.dashdados.api.DTO.input.LeadNegocioInputModel;
 import com.godoy.dashdados.api.DTO.input.PipelineInputModel;
+import com.godoy.dashdados.api.DTO.model.LeadNegocioModel;
 import com.godoy.dashdados.domain.model.Negocio;
 import com.godoy.dashdados.domain.model.Pipeline;
 
@@ -19,6 +20,8 @@ public class ModelMapperConfig {
 		modelMapper.createTypeMap(PipelineInputModel.class, Pipeline.class).addMappings(mapper -> mapper.skip(Pipeline::setId));
 
 		modelMapper.createTypeMap(LeadNegocioInputModel.class, Negocio.class).addMappings(mapper -> mapper.skip(Negocio::setId));
+		
+		modelMapper.createTypeMap(LeadNegocioModel.class, Negocio.class).addMappings(mapper -> mapper.skip(Negocio::setId));
 		
 		return modelMapper;
 	}
