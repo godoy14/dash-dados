@@ -59,43 +59,16 @@ public class LeadNegocioService {
 		return leadNegocioModelAssembler.toCollectionModel(leadNegocioRespository.findByPipelineId(pipelineId));
 	}
 	
+	public List<LeadNegocioModel> listarPorImobiliaria(Long imobiliariaId) {
+		return leadNegocioModelAssembler.toCollectionModel(leadNegocioRespository.findByImobiliariaId(imobiliariaId));
+	}
+	
 	@Transactional
 	public LeadNegocioModel salvar(LeadNegocioInputModel leadNegocioInputModel) {
 		
-//		Imobiliaria imobiliaria = imobiliariaService.buscarOuFalhar(leadNegocioInputModel.getImobiliariaCod());
-//		Pipeline pipeline = pipelineService.buscarOuFalhar(leadNegocioInputModel.getPipelineCod());
-//		ResponsavelNegocio responsavel = responsavelService.buscarOuFalhar(leadNegocioInputModel.getResponsavelCod());
-//		
-//		try {
-//			FonteNegocio.valueOf(FonteNegocio.class, leadNegocioInputModel.getFonte());
-//		} catch (IllegalArgumentException e) {
-//			throw new BadRequestException(
-//					String.format("%s não é uma Fonte compatível." + 
-//							" Favor verificar a listagem de Fontes no endpoint /negocios/leads/listaFonte,"
-//							, leadNegocioInputModel.getFonte().toString()));
-//		}
-//		
-//		try {
-//			StatusNegocio.valueOf(StatusNegocio.class, leadNegocioInputModel.getStatus());
-//		} catch (IllegalArgumentException e) {
-//			throw new BadRequestException(
-//					String.format("%s não é um Status compatível." + 
-//							" Favor verificar a listagem de Status no endpoint /negocios/leads/listaStatus,"
-//							, leadNegocioInputModel.getStatus().toString()));
-//		}
-//		
-//		try {
-//			TiposNegocios.valueOf(TiposNegocios.class, leadNegocioInputModel.getTipo());
-//		} catch (IllegalArgumentException e) {
-//			throw new BadRequestException(
-//					String.format("%s não é um Tipo de Lead compatível." + 
-//							" Favor verificar a listagem de Tipos no endpoint /negocios/leads/listaTiposLead,"
-//							, leadNegocioInputModel.getTipo()).toString());
-//		}
-		
 		EntitiesValidationObj obj = inputValidation(leadNegocioInputModel);
 		
-		LeadNegocio existentLead = leadNegocioRespository.findByIdBitrix(leadNegocioInputModel.getIdBitrix());
+		LeadNegocio existentLead = leadNegocioRespository.consultarPorIdBitrixImobiliariaId(leadNegocioInputModel.getIdBitrix(), leadNegocioInputModel.getImobiliariaCod());
 		if (existentLead != null) {
 			throw new NegocioException("Esse negócio Bitrix já foi adicionado");
 		}
@@ -120,12 +93,12 @@ public class LeadNegocioService {
 		inputValidation(leadNegocioInputModel);
 		
 		leadAtual.setStatus(StatusNegocio.valueOf(leadNegocioInputModel.getStatus()));
+		leadAtual.setFonte(FonteNegocio.valueOf(leadNegocioInputModel.getFonte()));
+		leadAtual.setTipo(TiposNegocios.valueOf(leadNegocioInputModel.getTipo()));
 		
 		leadAtual= leadNegocioRespository.save(leadAtual);
 		
 		LeadNegocioModel leadAtualModel = leadNegocioModelAssembler.toModel(leadAtual);
-		
-		// LeadNegocioModel leadNegocioSalvo = salvar(leadNegocioModelAssembler.toInputModel(leadAtualModel));
 		
 		return leadAtualModel;
 	}

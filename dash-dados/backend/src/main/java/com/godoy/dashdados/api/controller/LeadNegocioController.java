@@ -42,6 +42,12 @@ public class LeadNegocioController {
 		return leadNegocioService.listarPorPipeline(pipelineId);
 	}
 	
+	@GetMapping("/imobiliarias/{imobiliariaId}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<LeadNegocioModel> listarPorImobiliaria(@PathVariable Long imobiliariaId) {
+		return leadNegocioService.listarPorImobiliaria(imobiliariaId);
+	}
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public LeadNegocioModel adicionar(@RequestBody @Valid LeadNegocioInputModel leadNegocioInputModel) {
