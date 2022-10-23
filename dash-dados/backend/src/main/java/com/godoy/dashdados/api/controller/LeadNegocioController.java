@@ -1,11 +1,13 @@
 package com.godoy.dashdados.api.controller;
 
+import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,6 +48,16 @@ public class LeadNegocioController {
 	@ResponseStatus(HttpStatus.OK)
 	public List<LeadNegocioModel> listarPorImobiliaria(@PathVariable Long imobiliariaId) {
 		return leadNegocioService.listarPorImobiliaria(imobiliariaId);
+	}
+	
+	@GetMapping("/imobiliarias/{imobiliariaId}/datesSearch")
+	@ResponseStatus(HttpStatus.OK)
+	public List<LeadNegocioModel> listarPorImobiliaria(@PathVariable Long imobiliariaId, 
+			@Param(value = "startDate") String startDate, 
+			@Param(value = "finishDate") String finishDate) {
+		LocalDateTime start = LocalDateTime.parse(startDate);
+		LocalDateTime finish = LocalDateTime.parse(finishDate);
+		return leadNegocioService.listarPorImobiliariaStartFinishDate(imobiliariaId, start, finish);
 	}
 	
 	@PostMapping

@@ -1,5 +1,6 @@
 package com.godoy.dashdados.domain.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -61,6 +62,11 @@ public class LeadNegocioService {
 	
 	public List<LeadNegocioModel> listarPorImobiliaria(Long imobiliariaId) {
 		return leadNegocioModelAssembler.toCollectionModel(leadNegocioRespository.findByImobiliariaId(imobiliariaId));
+	}
+	
+	public List<LeadNegocioModel> listarPorImobiliariaStartFinishDate(Long imobiliariaId, LocalDateTime startDate, LocalDateTime finishDate) {
+		return leadNegocioModelAssembler.
+				toCollectionModel(leadNegocioRespository.consultarPorIdBitrixImobiliariaIdStartFinishDate(imobiliariaId, startDate, finishDate));
 	}
 	
 	@Transactional

@@ -1,5 +1,6 @@
 package com.godoy.dashdados.domain.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,8 @@ public interface LeadNegocioRespository extends JpaRepository<LeadNegocio, Long>
 //	@Query("select *  negocio n WHERE n.id_bitrix = :idBitrix and n.imobiliaria_id = :imobiliariaId and n.dtype='LeadNegocio'")
 	@Query("from LeadNegocio where idBitrix = :idBitrix and imobiliaria.id = :imobiliariaId")
 	LeadNegocio consultarPorIdBitrixImobiliariaId(Long idBitrix, Long imobiliariaId);
+	
+	@Query("from LeadNegocio where imobiliaria.id = :imobiliariaId and dateIn >= :startDate and dateIn <= :finishDate")
+	List<LeadNegocio> consultarPorIdBitrixImobiliariaIdStartFinishDate(Long imobiliariaId, LocalDateTime startDate, LocalDateTime finishDate);
 	
 }
