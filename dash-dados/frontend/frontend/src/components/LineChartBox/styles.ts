@@ -38,6 +38,7 @@ export const Content = styled.div`
 export const LegendContainer = styled.div`
     list-style: none;
     padding-left: 15px;
+    padding-bottom: 10px;
 
     background-color: #DCDCDC;
 
@@ -46,6 +47,7 @@ export const LegendContainer = styled.div`
     margin-left: 10px;
 
     width: 250px;
+    height: fit-content;
 
     > h2 {
         margin-top: 10px;
@@ -81,6 +83,7 @@ export const Legend = styled.li`
 `;
 
 export const ChartContainer = styled.div`
+    width: 100%;
     flex: 1;
     padding-right: 15px;
 `;

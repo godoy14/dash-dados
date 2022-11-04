@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
         while (monthDifference > 0){
             const filteredDataPerMonth = dataLead.filter(item => (new Date(item.dateIn).getMonth() + 1) == (d.getMonth() + 1) && (new Date(item.dateIn).getFullYear()) == (d.getFullYear()));
             let data = {
-                name: String(d.getMonth() + 1) + '/' + String(d.getFullYear()),
+                name: String(d.getMonth() + 1).padStart(2, "0") + '/' + String(d.getFullYear()),
                 total: filteredDataPerMonth.length,
                 totalSite: filteredDataPerMonth.filter(item => item.fonte === 'SITE').length,
                 totalTelefone: filteredDataPerMonth.filter(item => item.fonte === 'TELEFONE').length,

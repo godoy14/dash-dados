@@ -22,6 +22,7 @@ export const ContainerHeader = styled.div`
 
 `;
 
+
 export const TitleContainer = styled.div`
     display: flex;
     text-align: center;
@@ -103,8 +104,14 @@ export const ChartBox = styled.div`
     padding-bottom: 20px;
 
     display: flex;
+    flex-wrap: wrap;
 
     background-color: #ffffe0;
+
+    .lineChartBoxContainer {
+        margin: 0;
+    }
+
 `;
 
 export const Box = styled.div`

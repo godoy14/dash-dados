@@ -37,7 +37,7 @@ const ListCharts: React.FC = () => {
         for (let d = new Date(dataInicio); d <= dataTermino; d.setMonth((d.getMonth()) + 1)) {
             const filteredDataPerMonth = filteredData.filter(item => (new Date(item.dateIn).getMonth()) == (d.getMonth()) && (new Date(item.dateIn).getFullYear()) == (d.getFullYear()));
             let data = {
-                name: String(d.getMonth() + 1) + '/' + String(d.getFullYear()),
+                name: String(d.getMonth() + 1).padStart(2, "0") + '/' + String(d.getFullYear()),
                 total: filteredDataPerMonth.length,
                 totalSite: filteredDataPerMonth.filter(item => item.fonte === 'SITE').length,
                 totalTelefone: filteredDataPerMonth.filter(item => item.fonte === 'TELEFONE').length,

@@ -40,7 +40,7 @@ const LineChartBox: React.FC<ILineChartBox> = ({
     seeButton
 }) => {
     return (
-        <Container>
+        <Container className="lineChartBoxContainer">
             <Header>
                 <h1>{title}</h1>
             </Header>

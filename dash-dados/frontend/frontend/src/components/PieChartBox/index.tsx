@@ -2,7 +2,8 @@ import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 import {
-    Container
+    Container,
+    Header
 } from './styles';
 
 interface IPieChartProps {
@@ -15,9 +16,12 @@ interface IPieChartProps {
     }[]
 }
 
-const PieChartBox: React.FC<IPieChartProps> = ({ data }) => {
-    return(
+const PieChartBox: React.FC<IPieChartProps> = ({ data, title }) => {
+    return (
         <Container>
+            <Header>
+                <h1>{title}</h1>
+            </Header>
             <ResponsiveContainer>
                 <PieChart>
                     <Pie data={data} labelLine={false} dataKey="percent">
